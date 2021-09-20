@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// test that jobs are scheduled
+// TestCreateJob - Tests the CreateJob method
 func TestCreateJob(t *testing.T) {
 	name := "name"
 	interval := time.Second * time.Duration(0)
@@ -18,6 +18,7 @@ func TestCreateJob(t *testing.T) {
 	}
 }
 
+// TestReadJob - Tests the ReadJob method
 func TestReadJob(t *testing.T) {
 	db := make(database)
 	name := "name"
@@ -36,6 +37,7 @@ func TestReadJob(t *testing.T) {
 
 }
 
+// TestUpdateJob - Tests the UpdateJob method
 func TestUpdateJob(t *testing.T) {
 	db := make(database)
 	name := "name"
@@ -50,6 +52,7 @@ func TestUpdateJob(t *testing.T) {
 	}
 }
 
+// TestDeleteJob - Tests the DeleteJob method
 func TestDeleteJob(t *testing.T) {
 	db := make(database)
 	s := Scheduler{}
@@ -66,6 +69,7 @@ func TestDeleteJob(t *testing.T) {
 	}
 }
 
+// TestScheduler_AddJob - Tests the AddJob method of the Scheduler
 func TestScheduler_AddJob(t *testing.T) {
 	s := Scheduler{}
 	sch := InitScheduler(s)
@@ -86,6 +90,7 @@ func TestScheduler_AddJob(t *testing.T) {
 	}
 }
 
+// TestSceduler_RemoveJob - Tests the RemoveJob method of the Scheduler
 func TestScheduler_RemoveJob(t *testing.T) {
 	s := Scheduler{}
 	sch := InitScheduler(s)
@@ -104,6 +109,7 @@ func TestScheduler_RemoveJob(t *testing.T) {
 	}
 }
 
+// TestScheduler_CheckIfNextJobRunnable - Tests the CheckIfNextJobRunnable method of the Scheduler
 func TestScheduler_CheckIfNextJobRunnable(t *testing.T) {
 	s := Scheduler{}
 	sch := InitScheduler(s)
@@ -121,4 +127,3 @@ func TestScheduler_CheckIfNextJobRunnable(t *testing.T) {
 		t.Errorf("Expected false got true, timestamp=%v", job.queuedTimestamp)
 	}
 }
-

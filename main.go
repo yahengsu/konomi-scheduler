@@ -16,12 +16,14 @@ var (
 	DefaultDatabaseFilePath = "./database.csv"
 	InfoLogger              *log.Logger
 	ErrorLogger             *log.Logger
-	db = make(database)
-	exit = make(chan bool)
-	finishedReadingInputs = make(chan bool)
-	interruptChannel = make(chan os.Signal, 1)
+	db                      = make(database)
+	exit                    = make(chan bool)
+	finishedReadingInputs   = make(chan bool)
+	interruptChannel        = make(chan os.Signal, 1)
 )
+
 type database map[string]*Job
+
 // deque jobs and run them
 func runJobs(finishedReadingInputs chan bool, s *Scheduler) {
 	for {
@@ -40,7 +42,7 @@ func runJobs(finishedReadingInputs chan bool, s *Scheduler) {
 			}
 		}
 		if <-finishedReadingInputs {
-			exit<-true
+			exit <- true
 		}
 	}
 
@@ -73,7 +75,6 @@ func main() {
 
 	// Setup interrupt signal handler
 	signal.Notify(interruptChannel, os.Interrupt, os.Kill)
-
 
 	// Open the mock database file or create one if file does not exist
 	_, err := os.Stat(DefaultDatabaseFilePath)
@@ -139,7 +140,7 @@ func main() {
 	}
 
 	// Send notification to scheduler thread that inputs are finished being read
-	finishedReadingInputs<-true
+	finishedReadingInputs <- true
 
 	// Wait for notification from scheduler thread that all jobs have been scheduled
 	<-exit
